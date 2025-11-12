@@ -6,10 +6,10 @@ const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+const { UserModel } = require("./model/UserModel");
 const { HoldingsModel } = require("./model/HoldingsModel");
 const { PositionsModel } = require("./model/PositionsModel");
 const { OrdersModel } = require("./model/OrdersModel");
-const { UserModel } = require("./model/UserModel");
 
 const PORT = process.env.PORT || 3002;
 const uri = process.env.MONGODB_URI;
