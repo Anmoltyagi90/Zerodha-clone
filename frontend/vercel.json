@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "https://<backend-render-url>/api/$1" },
+    { "source": "/dashboard/(.*)", "destination": "https://<dashboard-vercel-url>/dashboard/$1" }
+  ]
+}
