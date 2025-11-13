@@ -2,71 +2,50 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const User = require("../model/UserModel");
+const { UserModel } = require("../model/UserModel");
 
-// ✅ SIGNUP
+require("dotenv").config();
+
+// ✅ Signup
 router.post("/signup", async (req, res) => {
   try {
-    const { email, password, name } = req.body;
+    const { name, email, password } = req.body;
 
-    if (!email || !password || !name) {
-      return res.status(400).json({ message: "All fields are required" });
+    if (!name || !email || !password) {
+      return res.status(400).json({ success: false, message: "All fields required!" });
     }
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await UserModel.findOne({ email });
     if (existingUser) {
-      return res.status(409).json({ message: "User already exists" });
+      return res.status(400).json({ success: false, message: "User already exists!" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ email, password: hashedPassword, name });
+    const newUser = new UserModel({ name, email, password: hashedPassword });
     await newUser.save();
 
-    res.status(201).json({ message: "Signup successful!" });
+    res.status(201).json({ success: true, message: "Signup successful!" });
   } catch (err) {
-    console.error("Signup error:", err);
-    res.status(500).json({ message: "Signup failed, please try again" });
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
-// ✅ LOGIN
+// ✅ Login
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
 
-    if (!user) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
+    const user = await UserModel.findOne({ email });
+    if (!user) return res.status(400).json({ success: false, message: "User not found!" });
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
+    if (!isMatch) return res.status(400).json({ success: false, message: "Invalid credentials!" });
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
-    });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "2h" });
 
-    res.json({ token });
+    res.json({ success: true, token, name: user.name });
   } catch (err) {
-    console.error("Login error:", err);
-    res.status(500).json({ message: "Login failed, please try again" });
-  }
-});
-
-// ✅ TOKEN VERIFY
-router.get("/verify", (req, res) => {
-  try {
-    const token = req.headers.authorization?.split(" ")[1];
-    if (!token) {
-      return res.status(401).json({ valid: false, message: "No token provided" });
-    }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    res.json({ valid: true, userId: decoded.userId });
-  } catch (err) {
-    res.status(401).json({ valid: false, message: "Invalid token" });
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
