@@ -11,13 +11,18 @@ const Pricing = () => {
           We pioneered the concept of discount broking and price transparency in
           India. Flat fees and no hidden charges.
         </p>
-        <a
-          href="#"
+
+        {/* ✅ Fixed: Changed <a> to <button> */}
+        <button
           className="text-blue-600 font-semibold inline-flex items-center gap-2 hover:underline transition"
+          onClick={() => {
+            // Add your navigation logic here
+            console.log("See pricing clicked");
+          }}
         >
           See pricing
           <i className="fa fa-long-arrow-right text-blue-600" aria-hidden="true"></i>
-        </a>
+        </button>
       </div>
 
       <div className="flex flex-col md:flex-row justify-center items-center gap-12">

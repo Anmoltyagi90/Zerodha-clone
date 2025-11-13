@@ -10,11 +10,11 @@ const Stats = () => {
 
         <div>
           <h3 className="text-xl  font-semibold text-gray-800 mb-2">
-            Customer-firsst always
+            Customer-first always
           </h3>
           <p>
-            That why 1.3+ crore customr trust zerodha with ₹3.5+ lakh crores
-            worth of equity investments{" "}
+            That’s why 1.3+ crore customers trust Zerodha with ₹3.5+ lakh crores
+            worth of equity investments
           </p>
         </div>
 
@@ -57,20 +57,21 @@ const Stats = () => {
         />
 
         <div className="flex flex-wrap justify-center gap-4">
-          <a
-            href="#"
-            className="text-blue-500 font-medium hover:text-blue-800 transition duration-300"
+          {/* ✅ Fixed href="#" by using <button> */}
+          <button
+            className="text-blue-500 font-medium hover:text-blue-800 transition duration-300 inline-flex items-center gap-2"
+            onClick={() => console.log("Explore products clicked")}
           >
             Explore our products
-            <i class="fa fa-long-arrow-right p-2 text-center" aria-hidden="true"></i>
+            <i className="fa fa-long-arrow-right p-2 text-center" aria-hidden="true"></i>
+          </button>
 
-          </a>
-          <a
-            href="#"
+          <button
             className="border border-blue-600 text-blue-600 px-6 py-2 rounded-full font-medium hover:bg-blue-50 transition duration-300"
+            onClick={() => console.log("Try Kite clicked")}
           >
             Try kite
-          </a>
+          </button>
         </div>
       </div>
     </div>
