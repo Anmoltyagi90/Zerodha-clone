@@ -2,6 +2,9 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import GeneralContext from "./GeneralContext";
 
+const API_URL =
+  process.env.REACT_APP_API_URL || "https://zerodha-clone-3fa0.onrender.com";
+
 const BuyActionWindow = ({ uid }) => {
   const [stockQuantity, setStockQuantity] = useState(1);
   const [stockPrice, setStockPrice] = useState(0.0);
@@ -10,7 +13,7 @@ const BuyActionWindow = ({ uid }) => {
 
   const handleBuyClick = async () => {
     try {
-      await axios.post("http://localhost:3002/newOrder", {
+      await axios.post(`${API_URL}/newOrder`, {
         name: uid,
         qty: stockQuantity,
         price: stockPrice,

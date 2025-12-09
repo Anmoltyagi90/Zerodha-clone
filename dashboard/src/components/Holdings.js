@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { VerticalGraph } from "./VerticalGraph";
 
+const API_URL =
+  process.env.REACT_APP_API_URL || "https://zerodha-clone-3fa0.onrender.com";
+
 const Holdings = () => {
   const [allHoldings, setAllHoldings] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3002/allHoldings").then((res) => {
+    axios.get(`${API_URL}/allHoldings`).then((res) => {
       setAllHoldings(res.data);
     });
   }, []);

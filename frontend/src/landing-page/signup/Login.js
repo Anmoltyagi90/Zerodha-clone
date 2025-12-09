@@ -9,7 +9,7 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const res = await fetch("http://localhost:3002/auth/login", {
+    const res = await fetch("https://zerodha-clone-3fa0.onrender.com/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -23,7 +23,7 @@ function Login() {
       localStorage.setItem("userName", data.name);
 
       // ✅ Redirect to Dashboard (port 3000)
-      window.location.href = "http://localhost:3000";
+      window.location.href = "https://zerodha-clone-qr4s.vercel.app/";
     } else {
       alert(data.message || "Invalid credentials");
     }

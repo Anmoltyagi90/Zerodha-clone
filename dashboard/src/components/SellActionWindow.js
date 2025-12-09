@@ -4,7 +4,7 @@ import GeneralContext from "./GeneralContext";
 import axios from "axios";
 
 const API_BASE_URL =
-  process.env.REACT_APP_API_URL || "http://localhost:3002";
+  process.env.REACT_APP_API_URL || "https://zerodha-clone-3fa0.onrender.com";
 
 const SellActionWindow = ({ uid }) => {
   const [stockQuantity, setStockQuantity] = useState(1);
